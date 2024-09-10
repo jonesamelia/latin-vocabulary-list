@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:to_dont_list/objects/item.dart';
 import 'package:to_dont_list/objects/player.dart';
 
 typedef ToDoListChangedCallback = Function(Player player);
 typedef ToDoListRemovedCallback = Function(Player player);
+
+enum SampleItem { editPlayer, deletePlayer }
+
 
 class RosterListPlayer extends StatelessWidget {
   RosterListPlayer(
@@ -16,6 +18,7 @@ class RosterListPlayer extends StatelessWidget {
 
   final ToDoListChangedCallback onListChanged;
   final ToDoListRemovedCallback onDeleteItem;
+
 
   Color _getColor(BuildContext context) {
     // The theme depends on the BuildContext because different
@@ -39,7 +42,7 @@ class RosterListPlayer extends StatelessWidget {
       //TODO: Later i want a pop up displaying all the stats, but right now this was causing problems
 
       // onTap: () => onListChanged(player), 
-      onLongPress: () => onDeleteItem(player),
+      // onLongPress: () => onDeleteItem(player),
       leading: CircleAvatar(
         backgroundColor: const Color(0x8a000000),
         child: Text(player.name),
@@ -62,7 +65,23 @@ class RosterListPlayer extends StatelessWidget {
             "Field Goal %: ${player.avg}"
           )
         ],
-      )
+      ),
+      trailing: PopupMenuButton(
+        itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
+          const PopupMenuItem(
+            value: SampleItem.editPlayer,
+            //TODO have on tap call an edit player dialog. 
+            // onTap: ,
+            child: Text("Edit Player"),
+          ),
+          PopupMenuItem(
+            value: SampleItem.deletePlayer,
+            onTap: () => onDeleteItem(player),
+            child: const Text('Delete Player'),)
+            
+        ],
+
+      ),
     );
   }
 }

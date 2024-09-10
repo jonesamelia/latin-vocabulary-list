@@ -1,5 +1,5 @@
 class Player {
-  Player({required this.number, required this.name});
+  Player({required this.name, required this.number});
 
   final int number;
   final String name;
