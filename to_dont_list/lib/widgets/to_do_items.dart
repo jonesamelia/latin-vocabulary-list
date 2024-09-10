@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/item.dart';
+import 'package:to_dont_list/objects/player.dart';
 
-typedef ToDoListChangedCallback = Function(Item item, bool completed);
-typedef ToDoListRemovedCallback = Function(Item item);
+typedef ToDoListChangedCallback = Function(Player player);
+typedef ToDoListRemovedCallback = Function(Player player);
 
-class ToDoListItem extends StatelessWidget {
-  ToDoListItem(
-      {required this.item,
-      required this.completed,
+class RosterListPlayer extends StatelessWidget {
+  RosterListPlayer(
+      {required this.player,
       required this.onListChanged,
       required this.onDeleteItem})
-      : super(key: ObjectKey(item));
+      : super(key: ObjectKey(player));
 
-  final Item item;
-  final bool completed;
+  final Player player;
 
   final ToDoListChangedCallback onListChanged;
   final ToDoListRemovedCallback onDeleteItem;
@@ -24,39 +23,47 @@ class ToDoListItem extends StatelessWidget {
     // The BuildContext indicates where the build is
     // taking place and therefore which theme to use.
 
-    return completed //
-        ? Colors.black
-        : Theme.of(context).primaryColor;
-  }
+      return Theme.of(context).primaryColor;
+    }
+  
 
   TextStyle? _getTextStyle(BuildContext context) {
-    if (!completed) return null;
-
     return const TextStyle(
-      color: Colors.black54,
-      decoration: TextDecoration.lineThrough,
+      color: Colors.black,
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      onTap: () {
-        onListChanged(item, completed);
-      },
-      onLongPress: completed
-          ? () {
-              onDeleteItem(item);
-            }
-          : null,
+      //TODO: Later i want a pop up displaying all the stats, but right now this was causing problems
+
+      // onTap: () => onListChanged(player), 
+      onLongPress: () => onDeleteItem(player),
       leading: CircleAvatar(
         backgroundColor: const Color(0x8a000000),
-        child: Text(item.abbrev()),
+        child: Text(player.name),
       ),
       title: Text(
-        item.name,
+        player.name,
         style: _getTextStyle(context),
       ),
+      subtitle: Row(
+        children: [
+          Text(
+            "Number: ${player.number}"
+          ),
+
+          //Vertical divider isn't quite what I want, but it works for now
+          const VerticalDivider(
+            width: 5,
+          ),
+          Text(
+            "Field Goal %: ${player.avg}"
+          )
+        ],
+      )
     );
   }
 }
+

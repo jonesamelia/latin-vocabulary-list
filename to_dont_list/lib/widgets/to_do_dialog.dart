@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
-typedef ToDoListAddedCallback = Function(
-    String value, TextEditingController textConroller);
+typedef RosterListAddedCallback = Function(
+    String value, int number, TextEditingController textConroller);
 
-class ToDoDialog extends StatefulWidget {
-  const ToDoDialog({
+class RosterDialog extends StatefulWidget {
+  const RosterDialog({
     super.key,
     required this.onListAdded,
   });
 
-  final ToDoListAddedCallback onListAdded;
+  final RosterListAddedCallback onListAdded;
 
   @override
-  State<ToDoDialog> createState() => _ToDoDialogState();
+  State<RosterDialog> createState() => _RosterDialogState();
 }
 
-class _ToDoDialogState extends State<ToDoDialog> {
+class _RosterDialogState extends State<RosterDialog> {
   // Dialog with text from https://www.appsdeveloperblog.com/alert-dialog-with-a-text-field-in-flutter/
   final TextEditingController _inputController = TextEditingController();
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
@@ -24,19 +24,36 @@ class _ToDoDialogState extends State<ToDoDialog> {
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
 
   String valueText = "";
+  int valueNum = -1;
 
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: const Text('Item To Add'),
-      content: TextField(
-        onChanged: (value) {
-          setState(() {
-            valueText = value;
-          });
-        },
-        controller: _inputController,
-        decoration: const InputDecoration(hintText: "type something here"),
+      title: const Text('Player To Add'),
+      content: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          TextField(
+            onChanged: (value) {
+              setState(() {
+                valueText = value;
+              });
+            },
+            //TODO: find out what these controllers do and how i should fix this
+            
+            // controller: _inputController,
+            decoration: const InputDecoration(hintText: "type player name"),
+          ),
+          TextField(
+            onChanged: (number) {
+              setState(() {
+                valueNum = int.parse(number);
+              });              
+            },
+            controller: _inputController,
+            decoration: const InputDecoration(hintText: "type player number")
+          )
+        ]
       ),
       actions: <Widget>[
 
@@ -50,7 +67,7 @@ class _ToDoDialogState extends State<ToDoDialog> {
               onPressed: value.text.isNotEmpty
                   ? () {
                       setState(() {
-                        widget.onListAdded(valueText, _inputController);
+                        widget.onListAdded(valueText, valueNum, _inputController);
                         Navigator.pop(context);
                       });
                     }

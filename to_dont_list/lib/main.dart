@@ -1,21 +1,24 @@
 // Started with https://docs.flutter.dev/development/ui/widgets-intro
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/item.dart';
+import 'package:to_dont_list/objects/player.dart';
 import 'package:to_dont_list/widgets/to_do_items.dart';
 import 'package:to_dont_list/widgets/to_do_dialog.dart';
 
-class ToDoList extends StatefulWidget {
-  const ToDoList({super.key});
+class RosterList extends StatefulWidget {
+  const RosterList({super.key});
 
   @override
-  State createState() => _ToDoListState();
+  State createState() {
+    return _RosterListState();
+  }
 }
 
-class _ToDoListState extends State<ToDoList> {
-  final List<Item> items = [const Item(name: "add more todos")];
-  final _itemSet = <Item>{};
+class _RosterListState extends State<RosterList> {
+  final List<Player> players = [Player(name: "Colten Berry", number: 35)];
+  // final _itemSet = <Item>{};
 
-  void _handleListChanged(Item item, bool completed) {
+  void _handleListChanged(Player player) {
     setState(() {
       // When a user changes what's in the list, you need
       // to change _itemSet inside a setState call to
@@ -23,31 +26,24 @@ class _ToDoListState extends State<ToDoList> {
       // The framework then calls build, below,
       // which updates the visual appearance of the app.
 
-      items.remove(item);
-      if (!completed) {
-        print("Completing");
-        _itemSet.add(item);
-        items.add(item);
-      } else {
-        print("Making Undone");
-        _itemSet.remove(item);
-        items.insert(0, item);
-      }
+      print("Making Undone");
+      // _itemSet.remove(item);
+      players.insert(players.length, player);
     });
   }
 
-  void _handleDeleteItem(Item item) {
+  void _handleDeleteItem(Player player) {
     setState(() {
       print("Deleting item");
-      items.remove(item);
+      players.remove(player);
     });
   }
 
-  void _handleNewItem(String itemText, TextEditingController textController) {
+  void _handleNewItem(String playerText, int playerNumber, TextEditingController textController) {
     setState(() {
       print("Adding new item");
-      Item item = Item(name: itemText);
-      items.insert(0, item);
+      Player player = Player(name: playerText, number: playerNumber);
+      players.insert(0, player);
       textController.clear();
     });
   }
@@ -56,14 +52,13 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('To Do List'),
+          title: const Text('Roster List'),
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),
-          children: items.map((item) {
-            return ToDoListItem(
-              item: item,
-              completed: _itemSet.contains(item),
+          children: players.map((player) {
+            return RosterListPlayer(
+              player: player,
               onListChanged: _handleListChanged,
               onDeleteItem: _handleDeleteItem,
             );
@@ -75,7 +70,7 @@ class _ToDoListState extends State<ToDoList> {
               showDialog(
                   context: context,
                   builder: (_) {
-                    return ToDoDialog(onListAdded: _handleNewItem);
+                    return RosterDialog(onListAdded: _handleNewItem);
                   });
             }));
   }
@@ -84,6 +79,6 @@ class _ToDoListState extends State<ToDoList> {
 void main() {
   runApp(const MaterialApp(
     title: 'To Do List',
-    home: ToDoList(),
+    home: RosterList(),
   ));
 }
