@@ -12,7 +12,9 @@ class RosterDialog extends StatefulWidget {
   final RosterListAddedCallback onListAdded;
 
   @override
-  State<RosterDialog> createState() => _RosterDialogState();
+  State<RosterDialog> createState() {
+    return _RosterDialogState();
+  }
 }
 
 class _RosterDialogState extends State<RosterDialog> {

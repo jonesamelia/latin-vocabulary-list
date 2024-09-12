@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/player.dart';
+import 'package:to_dont_list/widgets/roster_stats_view.dart';
 
 typedef ToDoListChangedCallback = Function(Player player);
 typedef ToDoListRemovedCallback = Function(Player player);
 
-enum SampleItem { editPlayer, deletePlayer }
+enum SampleItem { viewPlayer, editPlayer, deletePlayer }
 
 
 class RosterListPlayer extends StatelessWidget {
@@ -43,10 +44,9 @@ class RosterListPlayer extends StatelessWidget {
 
       // onTap: () => onListChanged(player), 
       // onLongPress: () => onDeleteItem(player),
-      leading: CircleAvatar(
-        backgroundColor: const Color(0x8a000000),
-        child: Text(player.name),
-      ),
+      leading: const CircleAvatar(
+        backgroundImage: AssetImage('assets/Basketball icon.png'), //TODO: this isn't working. idk why
+        ),
       title: Text(
         player.name,
         style: _getTextStyle(context),
@@ -68,14 +68,21 @@ class RosterListPlayer extends StatelessWidget {
       ),
       trailing: PopupMenuButton(
         itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
+          PopupMenuItem(
+            value: SampleItem.viewPlayer,
+            onTap: () => Navigator.push(
+              context, MaterialPageRoute(
+                builder: (context) => RosterStatsView(player: player))
+            ),
+            child: Text('View Stats')),
           const PopupMenuItem(
             value: SampleItem.editPlayer,
             //TODO have on tap call an edit player dialog. 
             // onTap: ,
-            child: Text("Edit Player"),
+            child: Text("Edit Stats"),
           ),
           PopupMenuItem(
-            value: SampleItem.deletePlayer,
+            value: SampleItem.deletePlayer, //is value even needed? the flutter documentation had it so i put it in
             onTap: () => onDeleteItem(player),
             child: const Text('Delete Player'),)
             

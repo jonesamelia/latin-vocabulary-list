@@ -80,6 +80,7 @@ class _RosterListState extends State<RosterList> {
           }).toList(),
         ),
         floatingActionButton: FloatingActionButton(
+            tooltip: "Add a new player",
             child: const Icon(Icons.add),
             onPressed: () {
               showDialog(
