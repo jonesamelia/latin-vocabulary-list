@@ -91,28 +91,27 @@ class RosterStatsView extends StatelessWidget{
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text("Assits: ${player.assists}"),
-                  Text("Steals: ${player.steals}"),
+                  Text("Steals: ${player.steals}")
                 ],
               ),
             ),
-
-            //TODO: this is repetitive. Make a new widget and map it to this I guess. kinda like main and roster_players. But each list 
-            //would be slightly different. The level of abstraction is possible, but for an application that is due in a week, it is too time intensive
-        ]
+      ]
       ),
       floatingActionButton: FloatingActionButton(
-            tooltip: "Input New Game Stats",
-            child: const Icon(Icons.add),
-            onPressed: () {
+        onPressed:  () {
               showDialog(
                   context: context,
                   builder: (_) {
-                    return RosterEditStatsDialog();
-                  }
-                );
+                    return const RosterEditStatsDialog();
+                  });
             }
         ),
+
     );
+
+            //TODO: this is repetitive. Make a new widget and map it to this I guess. kinda like main and roster_players. But each list 
+            //would be slightly different. The level of abstraction is possible, but for an application that is due in a week, it is too time intensive
+        
   }
 
 
