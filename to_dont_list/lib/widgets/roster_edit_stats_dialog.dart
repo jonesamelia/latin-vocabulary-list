@@ -7,7 +7,7 @@ typedef RosterStatsUpdatedCallback = Function(
     bool starter, int minutesPlayed, int fieldGoalsAttempted, int fieldGoalsMade, int threePtAttempted, int threePtMade, int freeThrowsAttempted, int freeThrowsMade, int offensiveRebounds, int defensiveRebounds, int assists, int steals); 
 
 class RosterEditStatsDialog extends StatefulWidget{
-  const RosterEditStatsDialog({super.key});
+  const RosterEditStatsDialog({super.key, required this.onGameAdded});
 
   // final RosterStatsUpdatedCallback onStatsUpdated;
 
@@ -16,7 +16,7 @@ class RosterEditStatsDialog extends StatefulWidget{
     return RosterEditStatsDialogState();
   }
 
-
+final RosterStatsUpdatedCallback onGameAdded;
 
 }
 //what is the difference between a widget and a state???
@@ -177,8 +177,8 @@ int steals = 0;
           ElevatedButton(
             onPressed: () {
               setState(() {
-                // widget.onStatsUpdated(starter, minutesPlayed, fieldGoalsAttempted, fieldGoalsMade, threePtAttempted, threePtMade, freeThrowsAttempted, freeThrowsMade, offensiveRebounds, defensiveRebounds, assists, steals);
-                Navigator.pop(context);
+                widget.onGameAdded(starter, minutesPlayed, fieldGoalsAttempted, fieldGoalsMade, threePtAttempted, threePtMade, freeThrowsAttempted, freeThrowsMade, offensiveRebounds, defensiveRebounds, assists, steals);
+                Navigator.pop(context, freeThrowsAttempted);
               });
             },
             child: const Text("Update"),

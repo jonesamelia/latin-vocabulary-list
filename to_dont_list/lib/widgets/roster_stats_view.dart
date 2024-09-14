@@ -12,19 +12,51 @@ final List statCategoriesList = [
   "Rebounds",
   "Other"
 ];
-class RosterStatsView extends StatelessWidget{
+class RosterStatsView extends StatefulWidget{
   final Player player;
-
   const RosterStatsView({super.key, required this.player});
-
-
-
   
   @override
+  State<StatefulWidget> createState() {
+    return RosterStatsViewState();
+  }
+
+}
+
+
+  class RosterStatsViewState extends State<RosterStatsView> {
+
+    void handleNewGame(bool starter, int minutesPlayed, int fieldGoalsAttempted, int fieldGoalsMade, int threePtAttempted, int threePtMade, int freeThrowsAttempted, int freeThrowsMade, int offensiveRebounds, int defensiveRebounds, int assists, int steals) {
+      setState(() {
+        widget.player.gamesPlayed += 1;
+        if (starter) {
+          widget.player.gamesStarted += 1;
+        }
+        widget.player.minutesPlayed += minutesPlayed;
+
+        widget.player.fga += fieldGoalsAttempted;
+        widget.player.fgm += fieldGoalsMade;
+
+        widget.player.threesA += threePtAttempted;
+        widget.player.threesM += threePtMade;
+
+        widget.player.fta += freeThrowsAttempted;
+        widget.player.ftm += freeThrowsMade;
+
+        widget.player.oRebounds += offensiveRebounds;
+        widget.player.dRebounds += defensiveRebounds;
+
+        widget.player.assists += assists;
+        widget.player.steals += steals;
+      });
+
+    }
+
+  @override
   Widget build(BuildContext context) {
-    return Scaffold(
+        return Scaffold(
       appBar: AppBar(
-        title: Text(player.name),
+        title: Text(widget.player.name),
       ),
       body: ListView(
         
@@ -34,9 +66,9 @@ class RosterStatsView extends StatelessWidget{
             subtitle: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text("Games Played: ${player.gamesPlayed}"),
-                Text("Games Started: ${player.gamesStarted}"),
-                Text("Minutes Played: ${player.minutesPlayed}")
+                Text("Games Played: ${widget.player.gamesPlayed}"),
+                Text("Games Started: ${widget.player.gamesStarted}"),
+                Text("Minutes Played: ${widget.player.minutesPlayed}")
               ]
             ),
             
@@ -46,9 +78,9 @@ class RosterStatsView extends StatelessWidget{
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Attempted: ${player.fga}"),
-                  Text("Made: ${player.fgm}"),
-                  Text("Average %: ${player.avg}")
+                  Text("Attempted: ${widget.player.fga}"),
+                  Text("Made: ${widget.player.fgm}"),
+                  Text("Average %: ${widget.player.avg}")
                 ],
               ),
             ),
@@ -57,9 +89,9 @@ class RosterStatsView extends StatelessWidget{
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Attempted: ${player.threesA}"),
-                  Text("Made: ${player.threesM}"),
-                  Text("Average %: ${player.threesAvg}")
+                  Text("Attempted: ${widget.player.threesA}"),
+                  Text("Made: ${widget.player.threesM}"),
+                  Text("Average %: ${widget.player.threesAvg}")
                 ],
               ),
             ),
@@ -68,9 +100,9 @@ class RosterStatsView extends StatelessWidget{
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Attempted: ${player.fta}"),
-                  Text("Made: ${player.ftm}"),
-                  Text("Average %: ${player.ftAvg}")
+                  Text("Attempted: ${widget.player.fta}"),
+                  Text("Made: ${widget.player.ftm}"),
+                  Text("Average %: ${widget.player.ftAvg}")
                 ],
               ),
             ),
@@ -79,9 +111,9 @@ class RosterStatsView extends StatelessWidget{
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Defensive: ${player.dRebounds}"),
-                  Text("Offensive: ${player.oRebounds}"),
-                  Text("Total: ${player.totalRebounds}")
+                  Text("Defensive: ${widget.player.dRebounds}"),
+                  Text("Offensive: ${widget.player.oRebounds}"),
+                  Text("Total: ${widget.player.totalRebounds}")
                 ],
               ),
             ),
@@ -90,8 +122,8 @@ class RosterStatsView extends StatelessWidget{
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text("Assits: ${player.assists}"),
-                  Text("Steals: ${player.steals}")
+                  Text("Assits: ${widget.player.assists}"),
+                  Text("Steals: ${widget.player.steals}")
                 ],
               ),
             ),
@@ -102,18 +134,13 @@ class RosterStatsView extends StatelessWidget{
               showDialog(
                   context: context,
                   builder: (_) {
-                    return const RosterEditStatsDialog();
+                    return RosterEditStatsDialog(onGameAdded: handleNewGame,);
                   });
             }
         ),
 
     );
 
-            //TODO: this is repetitive. Make a new widget and map it to this I guess. kinda like main and roster_players. But each list 
-            //would be slightly different. The level of abstraction is possible, but for an application that is due in a week, it is too time intensive
-        
   }
 
-
-
-}
+  }
