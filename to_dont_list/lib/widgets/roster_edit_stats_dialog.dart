@@ -49,6 +49,19 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
     return AlertDialog(
       title: const Text("Enter Game Stats"),
       content: Column(mainAxisSize: MainAxisSize.min, children: [
+        Row(
+          children: [
+            const Text("Starter?"),
+            Checkbox(
+              value: starter,
+              onChanged: (bool? value) {
+                setState(() {
+                  starter = value!;
+                });
+              },
+            ),
+          ],
+        ),
         TextField(
           decoration: const InputDecoration(labelText: "Minutes Played"),
           keyboardType: TextInputType.number,

@@ -35,7 +35,6 @@ class Player {
   }
 
   void calculateAvg() {
-    //implement rounding
     avg = (fgm / fga);
     avg = roundTwoDecimals(avg) * 100;
     ftAvg = (ftm / fta);
@@ -45,13 +44,13 @@ class Player {
     totalRebounds = dRebounds + oRebounds;
   }
 
-  void clearStats() {
-    fga = 0;
-    fgm = 0;
-    fta = 0;
-    ftm = 0;
-    threesA = 0;
-    threesM = 0;
-    calculateAvg();
-  }
+  // void clearStats() {
+  //   fga = 0;
+  //   fgm = 0;
+  //   fta = 0;
+  //   ftm = 0;
+  //   threesA = 0;
+  //   threesM = 0;
+  //   calculateAvg();
+  // }
 }
