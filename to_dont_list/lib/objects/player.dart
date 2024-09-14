@@ -27,22 +27,22 @@ class Player {
   int assists = 0;
   int steals = 0;
 
-
-  void calculateAvg() {
-    avg = fga / fgm;
-    ftAvg = fta / ftm;
-    threesAvg = threesA / threesM;
-    totalRebounds = dRebounds + oRebounds;
+  double roundTwoDecimals(double d) {
+    //d = 0.75876
+    String inString = d.toStringAsFixed(3); // 0.75
+    double inDouble = double.parse(inString);
+    return inDouble;
   }
 
-  void updateStats(int fga, int fgm, int fta, int ftm, int threesA, int threesM) {
-    this.fga += fga;
-    this.fgm += fgm;
-    this.fta += fta;
-    this.ftm += ftm;
-    this.threesA += threesA;
-    this.threesM += threesM;
-    calculateAvg();
+  void calculateAvg() {
+    //implement rounding
+    avg = (fgm / fga);
+    avg = roundTwoDecimals(avg) * 100;
+    ftAvg = (ftm / fta);
+    ftAvg = roundTwoDecimals(ftAvg) * 100;
+    threesAvg = (threesM / threesA);
+    threesAvg = roundTwoDecimals(threesAvg) * 100;
+    totalRebounds = dRebounds + oRebounds;
   }
 
   void clearStats() {

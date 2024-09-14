@@ -48,6 +48,8 @@ class RosterStatsView extends StatefulWidget{
 
         widget.player.assists += assists;
         widget.player.steals += steals;
+
+        widget.player.calculateAvg();
       });
 
     }
