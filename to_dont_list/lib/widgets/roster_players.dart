@@ -7,7 +7,6 @@ typedef ToDoListRemovedCallback = Function(Player player);
 
 enum SampleItem { viewPlayer, editPlayer, deletePlayer }
 
-
 class RosterListPlayer extends StatelessWidget {
   RosterListPlayer(
       {required this.player,
@@ -20,16 +19,14 @@ class RosterListPlayer extends StatelessWidget {
   final ToDoListChangedCallback onListChanged;
   final ToDoListRemovedCallback onDeleteItem;
 
-
   Color _getColor(BuildContext context) {
     // The theme depends on the BuildContext because different
     // parts of the tree can have different themes.
     // The BuildContext indicates where the build is
     // taking place and therefore which theme to use.
 
-      return Theme.of(context).primaryColor;
-    }
-  
+    return Theme.of(context).primaryColor;
+  }
 
   TextStyle? _getTextStyle(BuildContext context) {
     return const TextStyle(
@@ -42,54 +39,45 @@ class RosterListPlayer extends StatelessWidget {
     return ListTile(
       //TODO: Later i want a pop up displaying all the stats, but right now this was causing problems
 
-      // onTap: () => onListChanged(player), 
+      // onTap: () => onListChanged(player),
       // onLongPress: () => onDeleteItem(player),
       leading: const CircleAvatar(
-        backgroundImage: AssetImage('assets/Basketball icon.png'), //TODO: this isn't working. idk why
-        ),
+        // backgroundImage: AssetImage('assets/Basketball icon.png'), //TODO: this isn't working. idk why
+        backgroundColor: Colors.red,
+      ),
       title: Text(
         player.name,
         style: _getTextStyle(context),
       ),
       subtitle: Row(
         children: [
-          Text(
-            "Number: ${player.number}"
-          ),
+          Text("Number: ${player.number}"),
 
           //Vertical divider isn't quite what I want, but it works for now
           const VerticalDivider(
             width: 5,
           ),
-          Text(
-            "Field Goal %: ${player.avg}"
-          )
+          Text("Field Goal %: ${player.avg}")
         ],
       ),
       trailing: PopupMenuButton(
         itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
           PopupMenuItem(
-            value: SampleItem.viewPlayer,
-            onTap: () => Navigator.push(
-              context, MaterialPageRoute(
-                builder: (context) => RosterStatsView(player: player))
-            ),
-            child: Text('View Stats')),
-          const PopupMenuItem(
-            value: SampleItem.editPlayer,
-            //TODO have on tap call an edit player dialog. 
-            // onTap: ,
-            child: Text("Edit Stats"),
-          ),
+              key: const Key("ViewPlayerPopupMenuItem"),
+              value: SampleItem.viewPlayer,
+              onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => RosterStatsView(player: player))),
+              child: Text('View Stats')),
           PopupMenuItem(
-            value: SampleItem.deletePlayer, //is value even needed? the flutter documentation had it so i put it in
+            value: SampleItem
+                .deletePlayer, //is value even needed? the flutter documentation had it so i put it in
             onTap: () => onDeleteItem(player),
-            child: const Text('Delete Player'),)
-            
+            child: const Text('Delete Player'),
+          )
         ],
-
       ),
     );
   }
 }
-

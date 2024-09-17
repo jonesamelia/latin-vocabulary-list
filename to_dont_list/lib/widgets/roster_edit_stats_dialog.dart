@@ -63,6 +63,7 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
           ],
         ),
         TextField(
+          key: const Key("MinutesPlayedTextField"),
           decoration: const InputDecoration(labelText: "Minutes Played"),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -77,6 +78,7 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
           },
         ),
         TextField(
+          key: const Key("FGATextField"),
           decoration: const InputDecoration(labelText: "Field Goals Attmpted"),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -91,6 +93,7 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
           },
         ),
         TextField(
+          key: const Key("FGMTextField"),
           decoration: const InputDecoration(labelText: "Field Goals Made"),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -105,6 +108,7 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
           },
         ),
         TextField(
+          key: const Key("3PTATextField"),
           decoration: const InputDecoration(labelText: "3 Pointers Attempted"),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -119,6 +123,7 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
           },
         ),
         TextField(
+          key: const Key("3PTMTextField"),
           decoration: const InputDecoration(labelText: "3 Pointers Made"),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -133,6 +138,7 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
           },
         ),
         TextField(
+          key: const Key("FTATextField"),
           decoration: const InputDecoration(labelText: "Free Throws Attempted"),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -147,6 +153,7 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
           },
         ),
         TextField(
+          key: const Key("FTMTextField"),
           decoration: const InputDecoration(labelText: "Free Throws Made"),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -161,6 +168,7 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
           },
         ),
         TextField(
+            key: const Key("OReboundsTextField"),
             decoration: const InputDecoration(labelText: "Offensive Rebounds"),
             keyboardType: TextInputType.number,
             inputFormatters: <TextInputFormatter>[
@@ -174,6 +182,7 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
               });
             }),
         TextField(
+          key: const Key("DReboundsTextField"),
           decoration: const InputDecoration(labelText: "Defensive Rebounds"),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -188,6 +197,7 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
           },
         ),
         TextField(
+          key: const Key("AssistsTextField"),
           decoration: const InputDecoration(labelText: "Assists"),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -202,6 +212,7 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
           },
         ),
         TextField(
+          key: const Key("StealsTextField"),
           decoration: const InputDecoration(labelText: "Steals"),
           keyboardType: TextInputType.number,
           inputFormatters: <TextInputFormatter>[
@@ -216,6 +227,7 @@ class RosterEditStatsDialogState extends State<RosterEditStatsDialog> {
           },
         ),
         ElevatedButton(
+          key: const Key("UpdateStatsElevatedButton"),
           onPressed: () {
             setState(() {
               widget.onGameAdded(

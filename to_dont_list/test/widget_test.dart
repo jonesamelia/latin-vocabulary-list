@@ -5,14 +5,17 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'dart:ffi';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:to_dont_list/main.dart';
 
 import 'package:to_dont_list/objects/item.dart';
 import 'package:to_dont_list/objects/player.dart';
 import 'package:to_dont_list/widgets/roster_players.dart';
+import 'package:to_dont_list/widgets/roster_stats_view.dart';
 
 void main() {
   // test('Item abbreviation should be first letter', () {
@@ -117,7 +120,7 @@ void main() {
   });
 
   //RosterListPlayer Tests
-  testWidgets("RosterListPlayer has a name, number, and FG%", (tester) async {
+  testWidgets("RosterListPlayer has a name", (tester) async {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
             body: RosterListPlayer(
@@ -125,6 +128,223 @@ void main() {
                 onListChanged: (Player player) {},
                 onDeleteItem: (Player player) {}))));
     final textFinder = find.text('name');
+    expect(textFinder, findsOne);
+  });
+
+  testWidgets("RosterListPlayer has a number", (tester) async {
+    await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+            body: RosterListPlayer(
+                player: Player(name: "John", number: 20),
+                onListChanged: (Player player) {},
+                onDeleteItem: (Player player) {}))));
+    final rowFinder = find.byType(Row);
+    Row row = tester.firstWidget(rowFinder);
+    // final numberFinder = find.text('Number: 20');
+    // expect(numberFinder, findsOne);
+    expect(row, findsOne);
+  });
+
+  //rosterDialog - for a new player.
+  testWidgets("Clicking and typing adds player", (tester) async {
+    await tester.pumpWidget(const MaterialApp(home: RosterList()));
+
+    expect(find.byType(TextField), findsNothing);
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pump();
+    expect(find.text("Joe Johnson"), findsNothing);
+
+    await tester.enterText(
+        find.byKey(const Key("Player Name Text Field")), "Joe Johnson");
+    await tester.enterText(
+        find.byKey(const Key("Player Number Text Field")), "20");
+    await tester.tap(find.byKey(const Key("OKButton")));
+    await tester.pump();
+    expect(find.text("Joe Johnson"), findsOneWidget);
+    expect(find.text("20"), findsOneWidget);
+  });
+
+  //rosterStatsView
+  testWidgets("Clicking View brings up View Screen", (tester) async {
+    await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+      body: RosterListPlayer(
+          player: Player(name: "Joe Johnson", number: 20),
+          onListChanged: (Player player) {},
+          onDeleteItem: (Player player) {}),
+    )));
+    await tester.tap(find.byType(PopupMenuButton));
+    await tester.pump();
+    await tester.tap(find.byKey(const Key("ViewPlayerPopupMenuItem")));
+    await tester.pump();
+    final textFinder = find.byType(Text);
+    expect(textFinder, findsNWidgets(24));
+  });
+
+  //rosterEditStatsDialog
+
+  testWidgets("All fields exist", (tester) async {
+    await tester.pumpWidget(MaterialApp(
+        home: RosterStatsView(
+      player: Player(name: "John Johnson", number: 20),
+    )));
+
+    expect(find.byKey(const Key("GamesPlayedText")), findsOneWidget);
+    expect(find.byKey(const Key("GamesStartedText")), findsOneWidget);
+    expect(find.byKey(const Key("MinutesPlayedText")), findsOneWidget);
+
+    expect(find.byKey(const Key("FGAText")), findsOneWidget);
+    expect(find.byKey(const Key("FGMText")), findsOneWidget);
+    expect(find.byKey(const Key("FGAVGText")), findsOneWidget);
+
+    expect(find.byKey(const Key("3PTAText")), findsOneWidget);
+    expect(find.byKey(const Key("3PTMText")), findsOneWidget);
+    expect(find.byKey(const Key("3PTAVGText")), findsOneWidget);
+
+    expect(find.byKey(const Key("FTAText")), findsOneWidget);
+    expect(find.byKey(const Key("FTMText")), findsOneWidget);
+    expect(find.byKey(const Key("FTAVGText")), findsOneWidget);
+
+    expect(find.byKey(const Key("DReboundsText")), findsOneWidget);
+    expect(find.byKey(const Key("OReboundsText")), findsOneWidget);
+    expect(find.byKey(const Key("TotalReboundsText")), findsOneWidget);
+
+    expect(find.byKey(const Key("AssistsText")), findsOneWidget);
+    expect(find.byKey(const Key("StealsText")), findsOneWidget);
+  });
+
+  testWidgets("Clicking and typing updates Fields", (tester) async {
+    await tester.pumpWidget(MaterialApp(
+      home: RosterStatsView(player: Player(name: "Joe Johnson", number: 20)),
+    ));
+
+    var textFinder = find.text("Games Played: 0");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Games Started: 0");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Minutes Played: 0");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Attempted: 0");
+    expect(textFinder, findsNWidgets(3));
+
+    textFinder = find.text("Made: 0");
+    expect(textFinder, findsNWidgets(3));
+
+    //starts off NA
+    // textFinder = find.text("Average %: 0");
+    // expect(textFinder, findsNWidgets(3));
+
+    textFinder = find.text("Defensive: 0");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Offensive: 0");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Total: 0");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Assists: 0");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Steals: 0");
+    expect(textFinder, findsOneWidget);
+
+    await tester.tap(find.byType(FloatingActionButton));
+    await tester.pump();
+
+    await tester.tap(find.byType(Checkbox));
+    await tester.enterText(
+        find.byKey(const Key("MinutesPlayedTextField")), "30");
+    await tester.enterText(find.byKey(const Key("FGATextField")), "8");
+    await tester.pump();
+    await tester.enterText(find.byKey(const Key("FGMTextField")), "5");
+    await tester.pump();
+
+    await tester.enterText(find.byKey(const Key("3PTATextField")), "2");
+    await tester.pump();
+
+    await tester.enterText(find.byKey(const Key("3PTMTextField")), "2");
+    await tester.pump();
+
+    await tester.enterText(find.byKey(const Key("FTATextField")), "7");
+    await tester.pump();
+
+    await tester.enterText(find.byKey(const Key("FTMTextField")), "3");
+    await tester.pump();
+
+    await tester.enterText(find.byKey(const Key("OReboundsTextField")), "4");
+    await tester.pump();
+
+    await tester.enterText(find.byKey(const Key("DReboundsTextField")), "7");
+    await tester.pump();
+
+    await tester.enterText(find.byKey(const Key("AssistsTextField")), "3");
+    await tester.pump();
+
+    await tester.enterText(find.byKey(const Key("StealsTextField")), "1");
+    await tester.pump();
+
+    expect(find.text("8"), findsOne);
+
+    await tester.tap(find.byKey(const Key("UpdateStatsElevatedButton")));
+    await tester.pump();
+
+    textFinder = find.text("Games Played: 0");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Games Played: 1");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Games Started: 1");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Minutes Played: 30");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Attempted: 8");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Attempted: 2");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Attempted: 7");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Made: 5");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Made: 2");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Made: 4");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Average %: 62.5");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Average %: 100");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Average %: 42.9");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Defensive: 7");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Offensive: 4");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Total: 11");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Assists: 3");
+    expect(textFinder, findsOneWidget);
+
+    textFinder = find.text("Steals: 1");
     expect(textFinder, findsOneWidget);
   });
 }

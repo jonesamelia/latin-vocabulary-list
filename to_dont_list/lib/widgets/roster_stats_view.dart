@@ -72,9 +72,14 @@ class RosterStatsViewState extends State<RosterStatsView> {
           title: const Text("Playing Time: "),
           subtitle:
               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-            Text("Games Played: ${widget.player.gamesPlayed}"),
-            Text("Games Started: ${widget.player.gamesStarted}"),
-            Text("Minutes Played: ${widget.player.minutesPlayed}")
+            Text(
+              "Games Played: ${widget.player.gamesPlayed}",
+              key: const Key("GamesPlayedText"),
+            ),
+            Text("Games Started: ${widget.player.gamesStarted}",
+                key: const Key("GamesStartedText")),
+            Text("Minutes Played: ${widget.player.minutesPlayed}",
+                key: const Key("MinutesPlayedText"))
           ]),
         ),
         ListTile(
@@ -82,9 +87,11 @@ class RosterStatsViewState extends State<RosterStatsView> {
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Attempted: ${widget.player.fga}"),
-              Text("Made: ${widget.player.fgm}"),
-              Text("Average %: ${widget.player.avg}")
+              Text("Attempted: ${widget.player.fga}",
+                  key: const Key("FGAText")),
+              Text("Made: ${widget.player.fgm}", key: const Key("FGMText")),
+              Text("Average %: ${widget.player.avg}",
+                  key: const Key("FGAVGText"))
             ],
           ),
         ),
@@ -93,9 +100,12 @@ class RosterStatsViewState extends State<RosterStatsView> {
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Attempted: ${widget.player.threesA}"),
-              Text("Made: ${widget.player.threesM}"),
-              Text("Average %: ${widget.player.threesAvg}")
+              Text("Attempted: ${widget.player.threesA}",
+                  key: const Key("3PTAText")),
+              Text("Made: ${widget.player.threesM}",
+                  key: const Key("3PTMText")),
+              Text("Average %: ${widget.player.threesAvg}",
+                  key: const Key("3PTAVGText"))
             ],
           ),
         ),
@@ -104,9 +114,11 @@ class RosterStatsViewState extends State<RosterStatsView> {
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Attempted: ${widget.player.fta}"),
-              Text("Made: ${widget.player.ftm}"),
-              Text("Average %: ${widget.player.ftAvg}")
+              Text("Attempted: ${widget.player.fta}",
+                  key: const Key("FTAText")),
+              Text("Made: ${widget.player.ftm}", key: const Key("FTMText")),
+              Text("Average %: ${widget.player.ftAvg}",
+                  key: const Key("FTAVGText"))
             ],
           ),
         ),
@@ -115,9 +127,12 @@ class RosterStatsViewState extends State<RosterStatsView> {
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Defensive: ${widget.player.dRebounds}"),
-              Text("Offensive: ${widget.player.oRebounds}"),
-              Text("Total: ${widget.player.totalRebounds}")
+              Text("Defensive: ${widget.player.dRebounds}",
+                  key: const Key("DReboundsText")),
+              Text("Offensive: ${widget.player.oRebounds}",
+                  key: const Key("OReboundsText")),
+              Text("Total: ${widget.player.totalRebounds}",
+                  key: const Key("TotalReboundsText"))
             ],
           ),
         ),
@@ -126,8 +141,10 @@ class RosterStatsViewState extends State<RosterStatsView> {
           subtitle: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("Assits: ${widget.player.assists}"),
-              Text("Steals: ${widget.player.steals}")
+              Text("Assists: ${widget.player.assists}",
+                  key: const Key("AssistsText")),
+              Text("Steals: ${widget.player.steals}",
+                  key: const Key("StealsText"))
             ],
           ),
         ),

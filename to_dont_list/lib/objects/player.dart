@@ -29,7 +29,7 @@ class Player {
 
   double roundTwoDecimals(double d) {
     //d = 0.75876
-    String inString = d.toStringAsFixed(3); // 0.75
+    String inString = d.toStringAsFixed(3); // 0.758
     double inDouble = double.parse(inString);
     return inDouble;
   }

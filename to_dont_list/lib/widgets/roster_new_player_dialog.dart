@@ -32,33 +32,30 @@ class _RosterDialogState extends State<RosterDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       title: const Text('Player To Add'),
-      content: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          TextField(
-            onChanged: (value) {
-              setState(() {
-                valueText = value;
-              });
-            },
-            //TODO: find out what these controllers do and how i should fix this
-            
-            // controller: _inputController,
-            decoration: const InputDecoration(hintText: "type player name"),
-          ),
-          TextField(
+      content: Column(mainAxisSize: MainAxisSize.min, children: [
+        TextField(
+          key: const Key("Player Name Text Field"),
+          onChanged: (value) {
+            setState(() {
+              valueText = value;
+            });
+          },
+          //TODO: find out what these controllers do and how i should fix this
+
+          // controller: _inputController,
+          decoration: const InputDecoration(hintText: "type player name"),
+        ),
+        TextField(
+            key: const Key("Player Number Text Field"),
             onChanged: (number) {
               setState(() {
                 valueNum = int.parse(number);
-              });              
+              });
             },
             controller: _inputController,
-            decoration: const InputDecoration(hintText: "type player number")
-          )
-        ]
-      ),
+            decoration: const InputDecoration(hintText: "type player number"))
+      ]),
       actions: <Widget>[
-
         // https://stackoverflow.com/questions/52468987/how-to-turn-disabled-button-into-enabled-button-depending-on-conditions
         ValueListenableBuilder<TextEditingValue>(
           valueListenable: _inputController,
@@ -69,7 +66,8 @@ class _RosterDialogState extends State<RosterDialog> {
               onPressed: value.text.isNotEmpty
                   ? () {
                       setState(() {
-                        widget.onListAdded(valueText, valueNum, _inputController);
+                        widget.onListAdded(
+                            valueText, valueNum, _inputController);
                         Navigator.pop(context);
                       });
                     }
@@ -88,7 +86,6 @@ class _RosterDialogState extends State<RosterDialog> {
             });
           },
         ),
-
       ],
     );
   }
