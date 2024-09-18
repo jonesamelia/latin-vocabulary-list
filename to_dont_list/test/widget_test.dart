@@ -179,7 +179,7 @@ void main() {
     await tester.tap(find.byKey(const Key("ViewPlayerPopupMenuItem")));
     await tester.pump();
     final textFinder = find.byType(Text);
-    expect(textFinder, findsNWidgets(24));
+    expect(textFinder, findsNWidgets(24)); // view screen has 24 Text widgets.
   });
 
   //rosterEditStatsDialog
