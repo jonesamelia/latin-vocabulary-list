@@ -5,7 +5,13 @@ This is a project build using flutter. What it does is allow users to input a pl
 
 <picture>
 <img src = "./assets/EditStatsDialog.png">
+</picture>
+<picture>
 <img src = "./assets/HomeScreen.png">
+</picture>
+<picture>
 <img src = "./assets/PlayViewStatsScreen.png">
+</picture>
+<picture>
 <img src = "./assets/PopupMenu.png">
 </picture>
