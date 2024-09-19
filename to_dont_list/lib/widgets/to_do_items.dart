@@ -4,8 +4,10 @@ import 'package:to_dont_list/objects/Word.dart';
 typedef ToDoListChangedCallback = Function(Word item, bool completed);
 typedef ToDoListRemovedCallback = Function(Word item);
 
-class ToDoListItem extends StatelessWidget {
-  ToDoListItem(
+
+
+class WordListItem extends StatefulWidget {
+   WordListItem(
       {required this.word,
       required this.completed,
       required this.onListChanged,
@@ -18,35 +20,39 @@ class ToDoListItem extends StatelessWidget {
   final ToDoListChangedCallback onListChanged;
   final ToDoListRemovedCallback onDeleteItem;
 
+  @override
+  State <WordListItem> createState() =>  WordListItemState();
+}
+
+class  WordListItemState extends State<WordListItem> {
   Color _getColor(BuildContext context) {
     // The theme depends on the BuildContext because different
     // parts of the tree can have different themes.
     // The BuildContext indicates where the build is
     // taking place and therefore which theme to use.
 
-    return completed //
+    return widget.completed //
         ? Colors.black54
         : Theme.of(context).primaryColor;
   }
 
   TextStyle? _getTextStyle(BuildContext context) {
-    if (!completed) return null;
+    if (!widget.completed) return null;
 
     return const TextStyle(
       color: Colors.black54,
       decoration: TextDecoration.lineThrough,
     );
   }
-
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        onListChanged(word, completed);
+        widget.onListChanged(widget.word, widget.completed);
       },
-      onLongPress: completed
+      onLongPress: widget.completed
           ? () {
-              onDeleteItem(word);
+              widget.onDeleteItem(widget.word);
             }
           : null,
       leading: CircleAvatar(
@@ -54,7 +60,7 @@ class ToDoListItem extends StatelessWidget {
         //child: Text(word.abbrev()),
       ),
       title: Text(
-        word.name,
+        widget.word.name,
         style: _getTextStyle(context),
       ),
     );
