@@ -12,7 +12,7 @@ class ToDoList extends StatefulWidget {
 }
 
 class _ToDoListState extends State<ToDoList> {
-  final List<Word> items = [Word(name: "Amicus, Amici, M.", translation: "friend")];
+  final List<Word> items = [Word(name: "Amicus, Amici, M.", translation: "Friend")];
   final _itemSet = <Word>{};
 
   void _handleListChanged(Word item, bool completed) {
@@ -50,6 +50,7 @@ class _ToDoListState extends State<ToDoList> {
       items.insert(0, item);
       textController.clear();
       traController.clear();
+      items.sort((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase()));
     });
   }
 
