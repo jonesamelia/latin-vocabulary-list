@@ -29,9 +29,10 @@ class _ToDoDialogState extends State<ToDoDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return AlertDialog(
+    return AlertDialog( 
       title: const Text('Word To Add'),
-      content: TextField(
+      content: Column(mainAxisSize: MainAxisSize.min, children:[
+        TextField(
         onChanged: (value) {
           setState(() {
             valueText = value;
@@ -39,7 +40,8 @@ class _ToDoDialogState extends State<ToDoDialog> {
         },
         controller: _wordController,
         decoration: const InputDecoration(hintText: "type Latin word here"),
-      ), icon: TextField(
+      ), 
+      TextField(
         onChanged: (translate) {
           setState(() {
             translationText = translate;
@@ -48,6 +50,7 @@ class _ToDoDialogState extends State<ToDoDialog> {
         controller: _translationController,
         decoration: const InputDecoration(hintText: "type translation here"),
       ),
+      ] ),
       actions: <Widget>[
         ElevatedButton(
           key: const Key("CancelButton"),
