@@ -44,11 +44,20 @@ class  WordListItemState extends State<WordListItem> {
       decoration: TextDecoration.lineThrough,
     );
   }
+  
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
       onTap: () {
-        widget.onListChanged(widget.word, widget.completed);
+        showDialog(context: context, builder: (context){
+          return AlertDialog(
+            title: Text(widget.word.name),
+            content: Text(widget.word.translation),
+          );
+        
+        }
+        );
       },
       leading: CircleAvatar(
         backgroundColor: _getColor(context),
