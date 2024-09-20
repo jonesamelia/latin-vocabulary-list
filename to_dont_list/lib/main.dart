@@ -1,6 +1,6 @@
 // Started with https://docs.flutter.dev/development/ui/widgets-intro
 import 'package:flutter/material.dart';
-import 'package:to_dont_list/objects/Word.dart';
+import 'package:to_dont_list/objects/word.dart';
 import 'package:to_dont_list/widgets/to_do_items.dart';
 import 'package:to_dont_list/widgets/to_do_dialog.dart';
 
@@ -43,10 +43,10 @@ class _ToDoListState extends State<ToDoList> {
     });
   }
 
-  void _handleNewItem(String itemText, String trantext, TextEditingController textController) {
+  void _handleNewItem(String itemText, TextEditingController textController) {
     setState(() {
       print("Adding new item");
-      Word item = Word(name: itemText, translation:"friend");
+      Word item = Word(name: itemText, translation: "translation");
       items.insert(0, item);
       textController.clear();
     });

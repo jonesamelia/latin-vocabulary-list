@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:to_dont_list/objects/Word.dart';
+import 'package:to_dont_list/objects/word.dart';
 
 typedef ToDoListChangedCallback = Function(Word item, bool completed);
 typedef ToDoListRemovedCallback = Function(Word item);
