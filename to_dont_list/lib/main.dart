@@ -43,12 +43,13 @@ class _ToDoListState extends State<ToDoList> {
     });
   }
 
-  void _handleNewItem(String itemText, TextEditingController textController) {
+  void _handleNewItem(String itemText, String translateText, TextEditingController textController, TextEditingController traController) {
     setState(() {
       print("Adding new item");
-      Word item = Word(name: itemText, translation: "translation");
+      Word item = Word(name: itemText, translation: translateText);
       items.insert(0, item);
       textController.clear();
+      traController.clear();
     });
   }
 
@@ -56,7 +57,7 @@ class _ToDoListState extends State<ToDoList> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('To Do List'),
+          title: const Text('Latin Vocabulary List'),
         ),
         body: ListView(
           padding: const EdgeInsets.symmetric(vertical: 8.0),

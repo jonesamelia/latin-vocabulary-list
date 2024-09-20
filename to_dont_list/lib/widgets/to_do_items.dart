@@ -50,11 +50,6 @@ class  WordListItemState extends State<WordListItem> {
       onTap: () {
         widget.onListChanged(widget.word, widget.completed);
       },
-      onLongPress: widget.completed
-          ? () {
-              widget.onDeleteItem(widget.word);
-            }
-          : null,
       leading: CircleAvatar(
         backgroundColor: _getColor(context),
         //child: Text(word.abbrev()),
