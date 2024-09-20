@@ -12,7 +12,7 @@ class ToDoList extends StatefulWidget {
 }
 
 class _ToDoListState extends State<ToDoList> {
-  final List<Word> items = [Word(name: "Amicus, Amici, M.")];
+  final List<Word> items = [Word(name: "Amicus, Amici, M.", translation: "friend")];
   final _itemSet = <Word>{};
 
   void _handleListChanged(Word item, bool completed) {
@@ -43,10 +43,10 @@ class _ToDoListState extends State<ToDoList> {
     });
   }
 
-  void _handleNewItem(String itemText, TextEditingController textController) {
+  void _handleNewItem(String itemText, String trantext, TextEditingController textController) {
     setState(() {
       print("Adding new item");
-      Word item = Word(name: itemText);
+      Word item = Word(name: itemText, translation:"friend");
       items.insert(0, item);
       textController.clear();
     });
