@@ -61,16 +61,19 @@ class RosterListPlayer extends StatelessWidget {
         ],
       ),
       trailing: PopupMenuButton(
+        key: const Key("PlayerPopupMenuButton"),
         itemBuilder: (BuildContext context) => <PopupMenuEntry<SampleItem>>[
           PopupMenuItem(
-              key: const Key("ViewPlayerPopupMenuItem"),
-              value: SampleItem.viewPlayer,
-              onTap: () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => RosterStatsView(player: player))),
-              child: Text('View Stats')),
+            key: const Key("ViewPlayerPopupMenuItem"),
+            value: SampleItem.viewPlayer,
+            onTap: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => RosterStatsView(player: player))),
+            child: const Text('View Stats'),
+          ),
           PopupMenuItem(
+            key: const Key("DeletePlayerPopupMenuItem"),
             value: SampleItem
                 .deletePlayer, //is value even needed? the flutter documentation had it so i put it in
             onTap: () => onDeleteItem(player),
