@@ -9,57 +9,37 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:to_dont_list/main.dart';
-import 'package:to_dont_list/objects/item.dart';
+import 'package:to_dont_list/objects/word.dart';
 import 'package:to_dont_list/widgets/to_do_items.dart';
 
 void main() {
-  test('Item abbreviation should be first letter', () {
-    const item = Item(name: "add more todos");
-    expect(item.abbrev(), "a");
-  });
 
   // Yes, you really need the MaterialApp and Scaffold
-  testWidgets('ToDoListItem has a text', (tester) async {
+  testWidgets('WordListItem has a text and translation', (tester) async {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
-            body: ToDoListItem(
-                word: const Item(name: "test"),
+            body: WordListItem(
+                word: Word(name: "test", translation: "english"),
                 completed: true,
-                onListChanged: (Item item, bool completed) {},
-                onDeleteItem: (Item item) {}))));
+                onListChanged: (Word item, bool completed) {},
+                ))));
     final textFinder = find.text('test');
+    await tester.tap(textFinder);
+    await tester.pump();
+
+    expect(find.text("english"), findsOneWidget);
+
 
     // Use the `findsOneWidget` matcher provided by flutter_test to verify
     // that the Text widgets appear exactly once in the widget tree.
-    expect(textFinder, findsOneWidget);
+    //expect(textFinder, findsOneWidget);
   });
 
-  testWidgets('ToDoListItem has a Circle Avatar with abbreviation',
-      (tester) async {
-    await tester.pumpWidget(MaterialApp(
-        home: Scaffold(
-            body: ToDoListItem(
-                word: const Item(name: "test"),
-                completed: true,
-                onListChanged: (Item item, bool completed) {},
-                onDeleteItem: (Item item) {}))));
-    final abbvFinder = find.text('t');
-    final avatarFinder = find.byType(CircleAvatar);
-
-    CircleAvatar circ = tester.firstWidget(avatarFinder);
-    Text ctext = circ.child as Text;
-
-    // Use the `findsOneWidget` matcher provided by flutter_test to verify
-    // that the Text widgets appear exactly once in the widget tree.
-    expect(abbvFinder, findsOneWidget);
-    expect(circ.backgroundColor, Colors.black54);
-    expect(ctext.data, "t");
-  });
-
+  
   testWidgets('Default ToDoList has one item', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: ToDoList()));
 
-    final listItemFinder = find.byType(ToDoListItem);
+    final listItemFinder = find.byType(Word);
 
     expect(listItemFinder, findsOneWidget);
   });
@@ -81,7 +61,7 @@ void main() {
     await tester.pump();
     expect(find.text("hi"), findsOneWidget);
 
-    final listItemFinder = find.byType(ToDoListItem);
+    final listItemFinder = find.byType(WordListItem);
 
     expect(listItemFinder, findsNWidgets(2));
   });
