@@ -52,11 +52,9 @@ class  WordListItemState extends State<WordListItem> {
         showDialog(context: context, builder: (context){
           return AlertDialog(
             title: Text(widget.word.name),
-            content: Column( 
-              mainAxisSize: MainAxisSize.min, 
-              children:<Widget>[
-                Text(widget.word.translation),
-                Text(widget.word.pos)
+            content: Column( children: <Widget>[
+              Text(widget.word.translation),
+              Text(widget.word.pos)
             ]),
           );
         }

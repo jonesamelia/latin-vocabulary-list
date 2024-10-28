@@ -70,7 +70,7 @@ class _ToDoDialogState extends State<ToDoDialog> {
       DropdownMenu<PartOfSpeech>(
             initialSelection: PartOfSpeech.v,
             controller: _posController,
-            label: const Text('Part of Speech'),
+            label: const Text('Faction'),
             onSelected: (PartOfSpeech? part) {
               setState(() {
                 selectedPart = part;
