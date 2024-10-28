@@ -15,26 +15,26 @@ import 'package:to_dont_list/widgets/to_do_items.dart';
 void main() {
 
   // Yes, you really need the MaterialApp and Scaffold
-  // testWidgets('WordListItem has a text and translation', (tester) async {
-  //   await tester.pumpWidget(MaterialApp(
-  //       home: Scaffold(
-  //           body: WordListItem(
-  //               word: Word(name: "test", translation: "english", pos: "noun"),
-  //               completed: true,
-  //               onListChanged: (Word item, bool completed) {},
-  //               // was missing onDeleteItem when I found it
-  //               ))));
-  //   final textFinder = find.text('test');
-  //   await tester.tap(textFinder);
-  //   await tester.pump();
+  testWidgets('WordListItem has a text and translation', (tester) async {
+    await tester.pumpWidget(MaterialApp(
+        home: Scaffold(
+            body: WordListItem(
+                word: Word(name: "test", translation: "english", pos: "noun"),
+                completed: true,
+                onListChanged: (Word item, bool completed) {},
+                // was missing onDeleteItem when I found it
+                ))));
+    final textFinder = find.text('test');
+    await tester.tap(textFinder);
+    await tester.pump();
 
-  //   expect(find.text("english"), findsOneWidget);
+    expect(find.text("english"), findsOneWidget);
 
 
-  //   // Use the `findsOneWidget` matcher provided by flutter_test to verify
-  //   // that the Text widgets appear exactly once in the widget tree.
-  //   //expect(textFinder, findsOneWidget);
-  // });
+    // Use the `findsOneWidget` matcher provided by flutter_test to verify
+    // that the Text widgets appear exactly once in the widget tree.
+    //expect(textFinder, findsOneWidget);
+  });
 
   
   testWidgets('Default ToDoList has one item', (tester) async {
