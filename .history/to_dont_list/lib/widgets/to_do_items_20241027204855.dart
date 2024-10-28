@@ -4,15 +4,7 @@ import 'package:to_dont_list/objects/word.dart';
 typedef ToDoListChangedCallback = Function(Word item, bool completed);
 typedef ToDoListRemovedCallback = Function(Word item);
 
-enum WordType{
-  v("Verb"),
-  n("Noun"),
-  adj("Adjective"),
-  o("Other");
 
-  const WordType(this.type);
-  final String type;
-}
 
 class WordListItem extends StatefulWidget {
    WordListItem(
