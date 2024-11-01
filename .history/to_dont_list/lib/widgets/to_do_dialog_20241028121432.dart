@@ -15,7 +15,7 @@ enum PartOfSpeech{
 }
 
 typedef ToDoListAddedCallback = Function(
-    String value, String translatione, String pose, Color colore, TextEditingController textController, TextEditingController trController);
+    String value, String translatione, String pose, TextEditingController textController, TextEditingController trController);
 
 class ToDoDialog extends StatefulWidget {
   const ToDoDialog({
@@ -39,7 +39,6 @@ class _ToDoDialogState extends State<ToDoDialog> {
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
   PartOfSpeech? selectedPart = PartOfSpeech.v;
-  Color selectedColor = PartOfSpeech.v.color;
 
   String valueText = "";
   String translationText = "";
@@ -75,7 +74,6 @@ class _ToDoDialogState extends State<ToDoDialog> {
             onSelected: (PartOfSpeech? part) {
               setState(() {
                 selectedPart = part;
-                selectedColor = part!.color;
               });
             },
             dropdownMenuEntries: PartOfSpeech.values.map<DropdownMenuEntry<PartOfSpeech>>((PartOfSpeech part) {
@@ -109,7 +107,7 @@ class _ToDoDialogState extends State<ToDoDialog> {
               onPressed: value.text.isNotEmpty
                   ? () {
                       setState(() {
-                        widget.onListAdded(valueText, translationText, selectedPart!.type, selectedColor, _translationController, _wordController);
+                        widget.onListAdded(valueText, translationText, selectedPart!.type, _translationController, _wordController);
                         Navigator.pop(context);
                       });
                     }

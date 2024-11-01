@@ -63,7 +63,7 @@ class  WordListItemState extends State<WordListItem> {
         );
       },
       leading: CircleAvatar(
-        backgroundColor: widget.word.color,
+        backgroundColor: _getColor(context),
         //child: Text(word.abbrev()),
       ),
       title: Text(

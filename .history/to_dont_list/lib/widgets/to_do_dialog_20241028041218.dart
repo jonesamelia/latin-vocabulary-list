@@ -1,21 +1,20 @@
 import 'package:flutter/material.dart';
 
 enum PartOfSpeech{
-  v("Verb", Colors.green),
-  n("Noun", Colors.blue),
-  adj("Adjective", Colors.red),
-  adv("Adverb", Colors.yellow),
-  c("Conjunction", Colors.orange),
-  p("Preposition", Colors.purple),
-  i("Interjection", Colors.grey);
+  v("Verb"),
+  n("Noun"),
+  adj("Adjective"),
+  adv("Adverb"),
+  c("Conjunction"),
+  p("Preposition"),
+  i("Interjection");
 
-  const PartOfSpeech(this.type, this.color);
+  const PartOfSpeech(this.type);
   final String type;
-  final Color color;
 }
 
 typedef ToDoListAddedCallback = Function(
-    String value, String translatione, String pose, Color colore, TextEditingController textController, TextEditingController trController);
+    String value, String translatione, String pose, TextEditingController textController, TextEditingController trController);
 
 class ToDoDialog extends StatefulWidget {
   const ToDoDialog({
@@ -39,7 +38,6 @@ class _ToDoDialogState extends State<ToDoDialog> {
   final ButtonStyle noStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.red);
   PartOfSpeech? selectedPart = PartOfSpeech.v;
-  Color selectedColor = PartOfSpeech.v.color;
 
   String valueText = "";
   String translationText = "";
@@ -71,18 +69,16 @@ class _ToDoDialogState extends State<ToDoDialog> {
       DropdownMenu<PartOfSpeech>(
             initialSelection: PartOfSpeech.v,
             controller: _posController,
-            label: const Text('Part of Speech'),
+            label: const Text('Faction'),
             onSelected: (PartOfSpeech? part) {
               setState(() {
                 selectedPart = part;
-                selectedColor = part!.color;
               });
             },
             dropdownMenuEntries: PartOfSpeech.values.map<DropdownMenuEntry<PartOfSpeech>>((PartOfSpeech part) {
               return DropdownMenuEntry<PartOfSpeech>(
                 value: part,
                 label: part.type,
-                style: MenuItemButton.styleFrom(foregroundColor: part.color)
               );
             }).toList(),
           ),
@@ -109,7 +105,7 @@ class _ToDoDialogState extends State<ToDoDialog> {
               onPressed: value.text.isNotEmpty
                   ? () {
                       setState(() {
-                        widget.onListAdded(valueText, translationText, selectedPart!.type, selectedColor, _translationController, _wordController);
+                        widget.onListAdded(valueText, translationText, selectedPart!.type, _translationController, _wordController);
                         Navigator.pop(context);
                       });
                     }

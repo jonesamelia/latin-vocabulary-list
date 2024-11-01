@@ -12,7 +12,7 @@ class ToDoList extends StatefulWidget {
 }
 
 class _ToDoListState extends State<ToDoList> {
-  final List<Word> items = [Word(name: "amicus, amici, m.", translation: "Friend", pos: "Noun", color: Colors.blue)];
+  final List<Word> items = [Word(name: "amicus, amici, M.", translation: "Friend", pos: "Noun", color: Colors.blue)];
   final _itemSet = <Word>{};
 
   void _handleListChanged(Word item, bool completed) {

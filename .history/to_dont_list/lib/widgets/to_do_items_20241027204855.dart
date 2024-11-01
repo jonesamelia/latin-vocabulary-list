@@ -5,6 +5,7 @@ typedef ToDoListChangedCallback = Function(Word item, bool completed);
 typedef ToDoListRemovedCallback = Function(Word item);
 
 
+
 class WordListItem extends StatefulWidget {
    WordListItem(
       {required this.word,
@@ -52,18 +53,14 @@ class  WordListItemState extends State<WordListItem> {
         showDialog(context: context, builder: (context){
           return AlertDialog(
             title: Text(widget.word.name),
-            content: Column( 
-              mainAxisSize: MainAxisSize.min, 
-              children:<Widget>[
-                Text(widget.word.translation),
-                Text(widget.word.pos)
-            ]),
+            content: Text(widget.word.translation),
           );
+        
         }
         );
       },
       leading: CircleAvatar(
-        backgroundColor: widget.word.color,
+        backgroundColor: _getColor(context),
         //child: Text(word.abbrev()),
       ),
       title: Text(

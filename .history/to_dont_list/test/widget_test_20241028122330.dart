@@ -19,7 +19,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
             body: WordListItem(
-                word: Word(name: "test", translation: "english", pos: "noun", color: Colors.blue),
+                word: Word(name: "test", translation: "english", pos: "noun"),
                 completed: true,
                 onListChanged: (Word item, bool completed) {},
                 // was missing onDeleteItem when I found it
@@ -36,7 +36,7 @@ void main() {
     //expect(textFinder, findsOneWidget);
   });
 
-  // needs fixing
+  
   testWidgets('Default ToDoList has one item', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: ToDoList()));
 
@@ -45,8 +45,6 @@ void main() {
     expect(listItemFinder, findsOneWidget);
   });
 
-
-  // needs fixing
   testWidgets('Clicking and Typing adds item to ToDoList', (tester) async {
     await tester.pumpWidget(const MaterialApp(home: ToDoList()));
 

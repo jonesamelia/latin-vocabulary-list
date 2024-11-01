@@ -19,7 +19,7 @@ void main() {
     await tester.pumpWidget(MaterialApp(
         home: Scaffold(
             body: WordListItem(
-                word: Word(name: "test", translation: "english", pos: "noun", color: Colors.blue),
+                word: Word(name: "test", translation: "english", pos: "noun"),
                 completed: true,
                 onListChanged: (Word item, bool completed) {},
                 // was missing onDeleteItem when I found it
