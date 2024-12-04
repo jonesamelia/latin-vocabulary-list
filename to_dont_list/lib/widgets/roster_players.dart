@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/player.dart';
 import 'package:to_dont_list/widgets/roster_stats_view.dart';
@@ -34,6 +36,14 @@ class RosterListPlayer extends StatelessWidget {
     );
   }
 
+  CircleAvatar _getCircle(BuildContext context){
+    if(player.image == null){
+      return CircleAvatar(backgroundImage: Image.asset('assets/Basketball.png').image, backgroundColor: Colors.red);
+    } else{
+      return CircleAvatar(backgroundImage: Image.file(File(player.image!.path)).image,);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListTile(
@@ -41,10 +51,11 @@ class RosterListPlayer extends StatelessWidget {
 
       // onTap: () => onListChanged(player),
       // onLongPress: () => onDeleteItem(player),
-      leading: const CircleAvatar(
+      leading: _getCircle(context), /*CircleAvatar(
+        backgroundImage: Image.file(File(player.image!.path)).image,
         // backgroundImage: AssetImage('assets/Basketball icon.png'), //TODO: this isn't working. idk why
         backgroundColor: Colors.red,
-      ),
+      ),*/
       title: Text(
         player.name,
         style: _getTextStyle(context),

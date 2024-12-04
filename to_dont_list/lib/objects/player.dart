@@ -1,8 +1,14 @@
+import 'dart:io';
+
+import 'package:flutter/material.dart';
+
 class Player {
-  Player({required this.name, required this.number});
+  Player({required this.name, required this.number, this.image});
 
   final int number;
   final String name;
+  
+  File? image;
   // int ppg = 0;
   int gamesPlayed = 0;
   int gamesStarted = 0;

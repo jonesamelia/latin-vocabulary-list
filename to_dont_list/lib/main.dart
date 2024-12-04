@@ -1,4 +1,6 @@
 // Started with https://docs.flutter.dev/development/ui/widgets-intro
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:to_dont_list/objects/player.dart';
 import 'package:to_dont_list/widgets/roster_players.dart';
@@ -54,10 +56,10 @@ class _RosterListState extends State<RosterList> {
     });
   }
 
-  void _handleNewItem(String playerText, int playerNumber, TextEditingController textController) {
+  void _handleNewItem(String playerText, int playerNumber, TextEditingController textController, File? img) {
     setState(() {
       print("Adding new item");
-      Player player = Player(name: playerText, number: playerNumber);
+      Player player = Player(name: playerText, number: playerNumber, image: img);
       players.insert(0, player);
       textController.clear();
     });

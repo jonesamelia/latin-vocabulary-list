@@ -1,7 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 typedef RosterListAddedCallback = Function(
-    String value, int number, TextEditingController textConroller);
+    String value, int number, TextEditingController textConroller, File? imagec);
 
 class RosterDialog extends StatefulWidget {
   const RosterDialog({
@@ -19,6 +22,7 @@ class RosterDialog extends StatefulWidget {
 
 class _RosterDialogState extends State<RosterDialog> {
   // Dialog with text from https://www.appsdeveloperblog.com/alert-dialog-with-a-text-field-in-flutter/
+  final ImagePicker picker = ImagePicker();
   final TextEditingController _inputController = TextEditingController();
   final ButtonStyle yesStyle = ElevatedButton.styleFrom(
       textStyle: const TextStyle(fontSize: 20), backgroundColor: Colors.green);
@@ -27,6 +31,17 @@ class _RosterDialogState extends State<RosterDialog> {
 
   String valueText = "";
   int valueNum = -1;
+  File? image;
+  Future pickImage() async {
+    try {
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+  if(image == null) return;
+  final imageTemp = File(image.path);
+  setState(() => this.image = imageTemp);
+    } catch (e){
+      print('fail');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +68,15 @@ class _RosterDialogState extends State<RosterDialog> {
               });
             },
             controller: _inputController,
-            decoration: const InputDecoration(hintText: "type player number"))
+            decoration: const InputDecoration(hintText: "type player number")),
+        ElevatedButton(onPressed: (){
+          pickImage();
+        }, child: const Text('Add Image')),
+
+      // https://medium.com/unitechie/flutter-tutorial-image-picker-from-camera-gallery-c27af5490b74
+
+        SizedBox(height: 20,),
+        image != null ? Image.file(image!): Text("No image selected")
       ]),
       actions: <Widget>[
         // https://stackoverflow.com/questions/52468987/how-to-turn-disabled-button-into-enabled-button-depending-on-conditions
@@ -67,7 +90,7 @@ class _RosterDialogState extends State<RosterDialog> {
                   ? () {
                       setState(() {
                         widget.onListAdded(
-                            valueText, valueNum, _inputController);
+                            valueText, valueNum, _inputController, image);
                         Navigator.pop(context);
                       });
                     }
